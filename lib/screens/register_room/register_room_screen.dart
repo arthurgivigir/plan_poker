@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planpoker/screens/register_room/components/body.dart';
 
 class RegisterRoomScreen extends StatefulWidget {
   @override
@@ -9,15 +10,7 @@ class _RegisterRoomScreenState extends State<RegisterRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('PlanPoker!'),
-      ),
-      body: Center(
-        child: OutlineButton(
-          child: Text('Create a room'),
-          onPressed: () {},
-        ),
-      ),
+      body: Body(),
     );
   }
 }

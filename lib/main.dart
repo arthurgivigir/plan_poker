@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:planpoker/screens/register_room_screen.dart';
+import 'package:planpoker/screens/register_room/register_room_screen.dart';
 
 void main() {
   runApp(MyApp());
