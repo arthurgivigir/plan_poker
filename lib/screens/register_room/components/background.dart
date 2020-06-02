@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:planpoker/commons/constants.dart';
-import 'package:planpoker/screens/register_room/components/draw_triangle.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
@@ -20,34 +19,14 @@ class Background extends StatelessWidget {
         gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.white, Colors.white]),
+            colors: [
+              kPrimaryLightColor.withAlpha(80),
+              kPrimaryLighterColor.withAlpha(120)
+            ]),
       ),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: CustomPaint(
-              size: Size(size.width, size.height / 2),
-              painter: DrawTriangle(
-                maxSizePercent: 0.6,
-                color: kPrimaryDarkColor.withAlpha(180),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: CustomPaint(
-              size: Size(size.width, size.height / 2),
-              painter: DrawTriangle(
-                isInverted: true,
-                maxSizePercent: 0.6,
-                color: kSecondaryDarkColor.withAlpha(180),
-              ),
-            ),
-          ),
           child,
         ],
       ),
