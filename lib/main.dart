@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:planpoker/screens/register_room/register_room_screen.dart';
+import 'package:planpoker/commons/constants.dart';
+import 'package:planpoker/screens/register_room/home_screen.dart';
+import 'package:planpoker/screens/room/room_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: RegisterRoomScreen(),
+      initialRoute: kRouteHome,
+      routes: {
+        kRouteHome: (context) => HomeScreen(),
+        kRouteRoomScreen: (context) => RoomScreen(),
+      },
     );
   }
 }

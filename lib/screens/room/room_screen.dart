@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:planpoker/interfaces/card_flip.dart';
 import 'package:planpoker/screens/room/components/body.dart';
 
 class RoomScreen extends StatefulWidget {
@@ -11,8 +9,11 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
   @override
   Widget build(BuildContext context) {
+    final String args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      body: Body(),
+      body: Body(
+        roomId: args,
+      ),
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:planpoker/commons/constants.dart';
 import 'package:planpoker/interfaces/rounded_button.dart';
+import 'package:planpoker/models/room.dart';
+import 'package:planpoker/models/user.dart';
 import 'package:planpoker/screens/register_room/components/background.dart';
 import 'package:planpoker/services/room_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -12,7 +14,9 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     final _roomNameController = TextEditingController();
+    final _adminRoomNameController = TextEditingController();
     final _roomIdController = TextEditingController();
+    final _userNameController = TextEditingController();
 
     // The equivalent of the "smallestWidth" qualifier on Android.
     var shortestSide = MediaQuery.of(context).size.shortestSide;
@@ -25,22 +29,27 @@ class Body extends StatelessWidget {
         ? containerWidth = size.width - 40
         : containerWidth = (size.width / 4);
 
-    void getRoom({String id}) async {
+    void createRoom() async {
       try {
-        DocumentSnapshot returnedValue =
-            await RoomService.instance.get(roomId: _roomIdController.text);
+        var room = Room(name: _roomNameController.text);
+        var admin = User(name: _adminRoomNameController.text, cardValue: 1);
+        room.admin = admin;
+        room.users.add(admin);
 
-        print(returnedValue['name']);
+        String returnValue = await RoomService.instance.add(room: room);
+
+        print(returnValue);
+        Navigator.pushNamed(context, kRouteRoomScreen);
       } catch (error) {
         print(error);
       }
     }
 
-    void createRoom() async {
+    void enterRoom() async {
       try {
-        String returnValue =
-            await RoomService.instance.add(roomName: _roomNameController.text);
-        print(returnValue);
+        String roomID = await RoomService.instance.enterRoom(
+            roomId: _roomIdController.text, userName: _userNameController.text);
+        Navigator.pushNamed(context, kRouteRoomScreen, arguments: roomID);
       } catch (error) {
         print(error);
       }
@@ -49,7 +58,7 @@ class Body extends StatelessWidget {
     void alertCreateRoom() {
       Alert(
           context: context,
-          title: "Nome da Sala",
+          title: "Criar Sala",
           content: Column(
             children: <Widget>[
               TextField(
@@ -57,7 +66,15 @@ class Body extends StatelessWidget {
                 maxLength: 10,
                 decoration: InputDecoration(
                   icon: Icon(Icons.room),
-                  labelText: 'Nome',
+                  labelText: 'Nome da Sala',
+                ),
+              ),
+              TextField(
+                controller: _adminRoomNameController,
+                maxLength: 10,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.room),
+                  labelText: 'Seu Nome',
                 ),
               ),
             ],
@@ -66,7 +83,6 @@ class Body extends StatelessWidget {
             DialogButton(
               onPressed: () {
                 createRoom();
-                Navigator.pop(context);
               },
               child: Text(
                 "Criar!",
@@ -90,13 +106,20 @@ class Body extends StatelessWidget {
                   labelText: 'Código',
                 ),
               ),
+              TextField(
+                controller: _userNameController,
+                maxLength: 20,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.room),
+                  labelText: 'Seu Nome',
+                ),
+              ),
             ],
           ),
           buttons: [
             DialogButton(
               onPressed: () {
-                getRoom(id: _roomIdController.text);
-                Navigator.pop(context);
+                enterRoom();
               },
               child: Text(
                 "Entrar!",

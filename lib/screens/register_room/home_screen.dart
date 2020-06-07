@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:planpoker/screens/register_room/components/body.dart';
 
-class RegisterRoomScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _RegisterRoomScreenState createState() => _RegisterRoomScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _RegisterRoomScreenState extends State<RegisterRoomScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
