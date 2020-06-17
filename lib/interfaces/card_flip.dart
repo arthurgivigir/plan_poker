@@ -8,6 +8,8 @@ class CardFlip extends StatefulWidget {
     this.frontColor,
     this.backColor,
     this.numberCard,
+    this.canFlip,
+    this.onTap,
   });
 
   final double width;
@@ -15,6 +17,8 @@ class CardFlip extends StatefulWidget {
   final Color frontColor;
   final Color backColor;
   final int numberCard;
+  final bool canFlip;
+  final Function onTap;
 
   @override
   _CardFlipState createState() => _CardFlipState();
@@ -102,7 +106,7 @@ class _CardFlipState extends State<CardFlip>
         ..rotateY(kPi * _animation.value),
       child: GestureDetector(
         onTap: () {
-          if (_animationStatus == AnimationStatus.dismissed) {
+          if (widget.canFlip && _animationStatus == AnimationStatus.dismissed) {
             _animationController.forward();
           } else {
             _animationController.reverse();

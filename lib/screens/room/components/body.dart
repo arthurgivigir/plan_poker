@@ -23,8 +23,11 @@ class Body extends StatelessWidget {
 
     print(userId);
 
-    return Center(
-      child: StreamBuilder(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('PlanPoker'),
+      ),
+      body: StreamBuilder(
         stream: RoomService.instance.getSnapshot(roomId: roomId),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -49,8 +52,9 @@ class Body extends StatelessWidget {
                     frontColor: Colors.orange,
                     backColor: Colors.red,
                     numberCard: user.cardValue,
+                    canFlip: user.isAdmin,
                   ),
-                  Text('${user.name}'),
+                  Text('${user.name} ${user.isAdmin ? '⭐️ ' : ''}'),
                 ],
               ),
             );
@@ -58,16 +62,13 @@ class Body extends StatelessWidget {
             cardsSize.add(StaggeredTile.fit(1));
           }
 
-          return Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: StaggeredGridView.count(
-              crossAxisCount: 3,
-              staggeredTiles: cardsSize,
-              children: cards,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              padding: const EdgeInsets.all(4.0),
-            ),
+          return StaggeredGridView.count(
+            crossAxisCount: 3,
+            staggeredTiles: cardsSize,
+            children: cards,
+            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 10.0,
+            padding: const EdgeInsets.all(4.0),
           );
         },
       ),
