@@ -18,8 +18,8 @@ class Body extends StatelessWidget {
     String roomId = args?.item1;
     String userId = args?.item2;
 
-    // roomId = 'RMAI7N07nmhO6ccZhi2h';
-    // userId = 'LfzjxfHqnzPPE2iSELSNTTLKflK4NkWwnvE4Qqua2Fw=';
+    roomId = 'RMAI7N07nmhO6ccZhi2h';
+    userId = 'LfzjxfHqnzPPE2iSELSNTTLKflK4NkWwnvE4Qqua2Fw=';
 
     print(userId);
 
@@ -45,7 +45,7 @@ class Body extends StatelessWidget {
 
             cards.add(
               Column(
-                children: [
+                children: <Widget>[
                   CardFlip(
                     width: 80,
                     height: 120,
@@ -54,7 +54,21 @@ class Body extends StatelessWidget {
                     numberCard: user.cardValue,
                     canFlip: user.isAdmin,
                   ),
-                  Text('${user.name} ${user.isAdmin ? '⭐️ ' : ''}'),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          'Admin: ${user.isAdmin} ',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${user.name}',
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             );
@@ -63,12 +77,12 @@ class Body extends StatelessWidget {
           }
 
           return StaggeredGridView.count(
+            primary: false,
             crossAxisCount: 3,
             staggeredTiles: cardsSize,
             children: cards,
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
-            padding: const EdgeInsets.all(4.0),
           );
         },
       ),
