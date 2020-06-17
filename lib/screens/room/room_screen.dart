@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planpoker/screens/room/components/body.dart';
+import 'package:tuple/tuple.dart';
 
 class RoomScreen extends StatefulWidget {
   @override
@@ -9,11 +10,10 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
   @override
   Widget build(BuildContext context) {
-    final String args = ModalRoute.of(context).settings.arguments;
+    final Tuple2<String, String> args =
+        ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      body: Body(
-        roomId: args,
-      ),
+      body: Body(args: args),
     );
   }
 }

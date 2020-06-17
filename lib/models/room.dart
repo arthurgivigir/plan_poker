@@ -4,15 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Room {
   String id;
   String name;
-  User admin;
   List<User> users = [];
 
-  Room({this.id, this.name, this.admin});
+  Room({this.id, this.name});
 
   Room.fromMap(Map snapshot, String id)
       : id = id ?? '',
         name = snapshot['name'] ?? '',
-        admin = User.fromJson(snapshot['admin']),
         users = snapshot['users'] ?? [];
 
   List<Map> convertUserListToJson() {
@@ -26,7 +24,6 @@ class Room {
   toJson() {
     return {
       'name': name,
-      'admin': admin.toJson(),
       'users': FieldValue.arrayUnion(
         convertUserListToJson(),
       )

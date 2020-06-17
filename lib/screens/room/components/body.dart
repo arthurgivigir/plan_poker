@@ -1,21 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:planpoker/interfaces/card_flip.dart';
 import 'package:planpoker/models/user.dart';
+import 'package:planpoker/services/room_service.dart';
+import 'package:tuple/tuple.dart';
 
 class Body extends StatelessWidget {
-  Body({this.roomId});
+  Body({
+    this.args,
+  });
 
   static int size = 1;
-  final roomId;
+  final Tuple2<String, String> args;
 
   @override
   Widget build(BuildContext context) {
+    String roomId = args?.item1;
+    String userId = args?.item2;
+
+    // roomId = 'RMAI7N07nmhO6ccZhi2h';
+    // userId = 'LfzjxfHqnzPPE2iSELSNTTLKflK4NkWwnvE4Qqua2Fw=';
+
+    print(userId);
+
     return Center(
       child: StreamBuilder(
-        stream:
-            Firestore.instance.collection('rooms').document(roomId).snapshots(),
+        stream: RoomService.instance.getSnapshot(roomId: roomId),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Text("Loading");

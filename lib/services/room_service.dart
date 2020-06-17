@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planpoker/models/room.dart';
 import 'package:planpoker/models/user.dart';
 import 'package:planpoker/services/base_service.dart';
+import 'package:tuple/tuple.dart';
 
 class RoomService extends BaseService {
   static var instance = RoomService();
@@ -13,6 +14,7 @@ class RoomService extends BaseService {
       DocumentReference result = await firestore.collection('rooms').add(
             room.toJson(),
           );
+      print('OLAAAR $result');
       documentId = result.documentID;
     } catch (error) {
       return Future.error('Ocorreu um erro ao criar a sua sala... $error');
@@ -21,7 +23,8 @@ class RoomService extends BaseService {
     return documentId;
   }
 
-  Future<String> enterRoom({String roomId, String userName}) async {
+  Future<Tuple2<String, String>> enterRoom(
+      {String roomId, String userName}) async {
     try {
       User user = User(name: userName, cardValue: 1);
 
@@ -32,9 +35,9 @@ class RoomService extends BaseService {
           'users': FieldValue.arrayUnion([user.toJson()])
         },
       );
-      print('Passo 3');
+      print('Passo 3 ${user.id}');
 
-      return result.documentID;
+      return Tuple2(result.documentID, user.id);
     } catch (error) {
       return Future.error(
           'Ocorreu um erro ao entrar na sua sala... ${'rooms/$roomId'} $error');
@@ -50,4 +53,7 @@ class RoomService extends BaseService {
           'Ocorreu um erro ao entrar na sua sala... ${'rooms/$roomId'} $error');
     }
   }
+
+  Stream<DocumentSnapshot> getSnapshot({String roomId}) =>
+      firestore.collection('rooms').document(roomId).snapshots();
 }

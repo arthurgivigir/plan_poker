@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:planpoker/commons/constants.dart';
 import 'package:planpoker/interfaces/rounded_button.dart';
@@ -7,6 +6,7 @@ import 'package:planpoker/models/user.dart';
 import 'package:planpoker/screens/register_room/components/background.dart';
 import 'package:planpoker/services/room_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:tuple/tuple.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -32,14 +32,19 @@ class Body extends StatelessWidget {
     void createRoom() async {
       try {
         var room = Room(name: _roomNameController.text);
-        var admin = User(name: _adminRoomNameController.text, cardValue: 1);
-        room.admin = admin;
+        var admin = User(
+          name: _adminRoomNameController.text,
+          cardValue: 1,
+          isAdmin: true,
+        );
         room.users.add(admin);
 
-        String returnValue = await RoomService.instance.add(room: room);
+        String roomID = await RoomService.instance.add(room: room);
 
-        print(returnValue);
-        Navigator.pushNamed(context, kRouteRoomScreen);
+        print(roomID);
+        print(admin.id);
+        Navigator.pushNamed(context, kRouteRoomScreen,
+            arguments: Tuple2(roomID, admin.id));
       } catch (error) {
         print(error);
       }
@@ -47,9 +52,11 @@ class Body extends StatelessWidget {
 
     void enterRoom() async {
       try {
-        String roomID = await RoomService.instance.enterRoom(
-            roomId: _roomIdController.text, userName: _userNameController.text);
-        Navigator.pushNamed(context, kRouteRoomScreen, arguments: roomID);
+        Tuple2<String, String> returnTuple = await RoomService.instance
+            .enterRoom(
+                roomId: _roomIdController.text,
+                userName: _userNameController.text);
+        Navigator.pushNamed(context, kRouteRoomScreen, arguments: returnTuple);
       } catch (error) {
         print(error);
       }
