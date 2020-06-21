@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:planpoker/commons/constants.dart';
 import 'package:planpoker/interfaces/rounded_button.dart';
+import 'package:planpoker/models/user.dart';
 
 class UserBox extends StatelessWidget {
   const UserBox({
     Key key,
     @required this.size,
+    @required this.user,
   }) : super(key: key);
 
   final Size size;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class UserBox extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Text(
-            'Admin',
+            user.name,
             style: const TextStyle(color: Colors.grey),
           ),
         ),

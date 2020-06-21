@@ -44,7 +44,7 @@ class Body extends StatelessWidget {
         print(roomID);
         print(admin.id);
         Navigator.pushNamed(context, kRouteRoomScreen,
-            arguments: Tuple2(roomID, admin.id));
+            arguments: Tuple2(roomID, admin));
       } catch (error) {
         print(error);
       }
@@ -52,10 +52,8 @@ class Body extends StatelessWidget {
 
     void enterRoom() async {
       try {
-        Tuple2<String, String> returnTuple = await RoomService.instance
-            .enterRoom(
-                roomId: _roomIdController.text,
-                userName: _userNameController.text);
+        Tuple2<String, User> returnTuple = await RoomService.instance.enterRoom(
+            roomId: _roomIdController.text, userName: _userNameController.text);
         Navigator.pushNamed(context, kRouteRoomScreen, arguments: returnTuple);
       } catch (error) {
         print(error);

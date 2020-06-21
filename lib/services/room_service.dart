@@ -23,7 +23,7 @@ class RoomService extends BaseService {
     return documentId;
   }
 
-  Future<Tuple2<String, String>> enterRoom(
+  Future<Tuple2<String, User>> enterRoom(
       {String roomId, String userName}) async {
     try {
       User user = User(name: userName, cardValue: 1);
@@ -37,7 +37,7 @@ class RoomService extends BaseService {
       );
       print('Passo 3 ${user.id}');
 
-      return Tuple2(result.documentID, user.id);
+      return Tuple2(result.documentID, user);
     } catch (error) {
       return Future.error(
           'Ocorreu um erro ao entrar na sua sala... ${'rooms/$roomId'} $error');

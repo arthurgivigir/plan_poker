@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:planpoker/commons/constants.dart';
 import 'package:planpoker/interfaces/rounded_button.dart';
+import 'package:planpoker/models/user.dart';
 import 'package:planpoker/screens/room/components/box.dart';
 import 'package:planpoker/screens/room/components/user_box.dart';
 
 class HeaderMaker extends StatelessWidget {
   const HeaderMaker({
-    this.size,
+    @required this.size,
+    @required this.user,
   });
 
   final Size size;
+  final User user;
 
   int crossAxisCount() {
     print('💻 ${size.width}');
@@ -32,7 +35,10 @@ class HeaderMaker extends StatelessWidget {
       children: [
         Box(
           size: size,
-          child: UserBox(size: size),
+          child: UserBox(
+            size: size,
+            user: user,
+          ),
         ),
         Box(
           size: size,
