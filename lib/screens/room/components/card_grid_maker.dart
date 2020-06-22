@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:planpoker/commons/constants.dart';
 import 'package:planpoker/interfaces/card_flip.dart';
 import 'package:planpoker/models/user.dart';
 import 'package:planpoker/services/room_service.dart';
@@ -32,6 +33,7 @@ class CardGridMaker extends StatelessWidget {
 
         var documentData = snapshot.data;
         var usersMap = documentData['users'] as List;
+        var flipNow = documentData['flipNow'] as bool;
 
         for (var userMap in usersMap) {
           var user = User.fromJson(userMap);
@@ -42,22 +44,19 @@ class CardGridMaker extends StatelessWidget {
                 CardFlip(
                   width: 80,
                   height: 120,
-                  frontColor: Colors.orange,
-                  backColor: Colors.red,
+                  frontColor: kPrimaryDarkerColor,
+                  backColor: kSecondaryColor,
                   numberCard: user.cardValue,
                   canFlip: user.isAdmin,
+                  flipNow: flipNow,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'Admin: ${user.isAdmin} ',
+                        '${user.name} ',
                         style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '${user.name}',
-                        style: const TextStyle(color: Colors.grey),
                       ),
                     ],
                   ),

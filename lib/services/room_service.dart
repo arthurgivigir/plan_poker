@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planpoker/models/room.dart';
 import 'package:planpoker/models/user.dart';
 import 'package:planpoker/services/base_service.dart';
+import 'package:planpoker/services/local_storage.dart';
 import 'package:tuple/tuple.dart';
 
 class RoomService extends BaseService {
@@ -51,6 +52,56 @@ class RoomService extends BaseService {
     } catch (error) {
       return Future.error(
           'Ocorreu um erro ao entrar na sua sala... ${'rooms/$roomId'} $error');
+    }
+  }
+
+  void updateMyCard({String roomId, String userId, int value}) async {
+    try {
+      User user = await LocalStorage.instance.getUser();
+
+      final result = firestore.document('rooms/$roomId');
+      await result.updateData(
+        {
+          'users': FieldValue.arrayRemove([user.toJson()]),
+        },
+      );
+
+      user.cardValue = value;
+      await result.updateData(
+        {
+          'users': FieldValue.arrayUnion([user.toJson()]),
+        },
+      );
+
+      LocalStorage.instance.saveUser(user);
+      print(' ### ${result.toString()}');
+    } catch (error) {
+      Future.error(
+          'Ocorreu um erro ao fazer update da carta... ${'rooms/$roomId'} $error');
+    }
+  }
+
+  void flipCards({String roomId}) async {
+    try {
+      final result = firestore.document('rooms/$roomId');
+      await result.updateData(
+        {'flipNow': true},
+      );
+    } catch (error) {
+      Future.error(
+          'Ocorreu um erro ao virar as cartas... ${'rooms/$roomId'} $error');
+    }
+  }
+
+  void defaultValuesCards({String roomId}) async {
+    try {
+      final result = firestore.document('rooms/$roomId');
+      await result.updateData(
+        {'flipNow': false},
+      );
+    } catch (error) {
+      Future.error(
+          'Ocorreu um erro ao virar as cartas... ${'rooms/$roomId'} $error');
     }
   }
 

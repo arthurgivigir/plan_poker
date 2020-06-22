@@ -9,6 +9,7 @@ class LocalStorage {
   Future saveUser(User user) async {
     _localStorage['user_id'] = user.id;
     _localStorage['user_name'] = user.name;
+    _localStorage['cardValue'] = user.cardValue.toString();
     _localStorage['user_is_admin'] = user.isAdmin.toString().toLowerCase();
   }
 
@@ -20,6 +21,7 @@ class LocalStorage {
     User user = User();
     user.id = _localStorage['user_id'];
     user.name = _localStorage['user_name'];
+    user.cardValue = int.parse(_localStorage['cardValue']);
     user.isAdmin = _localStorage['user_is_admin'].parseBool();
     return user;
   }

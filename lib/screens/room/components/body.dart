@@ -57,6 +57,7 @@ class ScrollView extends StatelessWidget {
         HeaderMaker(
           size: size,
           user: user,
+          roomId: roomId,
         ),
         CardGridMaker(roomId: roomId),
       ],

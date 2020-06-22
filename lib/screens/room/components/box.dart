@@ -19,9 +19,9 @@ class Box extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 200,
+              height: 250,
               child: Padding(
-                padding: EdgeInsets.all(25),
+                padding: EdgeInsets.all(20),
                 child: child,
               ),
               decoration: BoxDecoration(

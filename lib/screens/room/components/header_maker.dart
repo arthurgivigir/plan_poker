@@ -5,15 +5,18 @@ import 'package:planpoker/interfaces/rounded_button.dart';
 import 'package:planpoker/models/user.dart';
 import 'package:planpoker/screens/room/components/box.dart';
 import 'package:planpoker/screens/room/components/user_box.dart';
+import 'package:planpoker/services/room_service.dart';
 
 class HeaderMaker extends StatelessWidget {
   const HeaderMaker({
     @required this.size,
     @required this.user,
+    @required this.roomId,
   });
 
   final Size size;
   final User user;
+  final String roomId;
 
   int crossAxisCount() {
     print('💻 ${size.width}');
@@ -38,11 +41,15 @@ class HeaderMaker extends StatelessWidget {
           child: UserBox(
             size: size,
             user: user,
+            roomId: roomId,
           ),
         ),
         Box(
           size: size,
-          child: ButtonsBox(size: size),
+          child: ButtonsBox(
+            size: size,
+            roomId: roomId,
+          ),
         ),
       ],
       mainAxisSpacing: 10.0,
@@ -53,11 +60,12 @@ class HeaderMaker extends StatelessWidget {
 
 class ButtonsBox extends StatelessWidget {
   const ButtonsBox({
-    Key key,
     @required this.size,
-  }) : super(key: key);
+    @required this.roomId,
+  });
 
   final Size size;
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +74,15 @@ class ButtonsBox extends StatelessWidget {
       children: [
         RoundedButton(
           size: size,
-          color: kSecondaryLightColor,
+          color: kPrimaryDarkColor,
           text: 'Virar todas as Cartas',
-          press: () => {},
+          press: () => RoomService.instance.flipCards(roomId: roomId),
         ),
         RoundedButton(
           size: size,
-          color: kSecondaryLightColor,
+          color: kPrimaryDarkColor,
           text: 'Zerar Cartas',
-          press: () => {},
+          press: () => RoomService.instance.defaultValuesCards(roomId: roomId),
         )
       ],
     );

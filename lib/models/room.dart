@@ -5,13 +5,15 @@ class Room {
   String id;
   String name;
   List<User> users = [];
+  bool flipNow = false;
 
   Room({this.id, this.name});
 
   Room.fromMap(Map snapshot, String id)
       : id = id ?? '',
         name = snapshot['name'] ?? '',
-        users = snapshot['users'] ?? [];
+        users = snapshot['users'] ?? [],
+        flipNow = snapshot['flipNow'] ?? false;
 
   List<Map> convertUserListToJson() {
     List<Map> list = [];
@@ -24,6 +26,7 @@ class Room {
   toJson() {
     return {
       'name': name,
+      'flipNow': flipNow,
       'users': FieldValue.arrayUnion(
         convertUserListToJson(),
       )

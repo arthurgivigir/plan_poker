@@ -8,8 +8,9 @@ class CardFlip extends StatefulWidget {
     this.frontColor,
     this.backColor,
     this.numberCard,
-    this.canFlip,
+    this.canFlip = false,
     this.onTap,
+    this.flipNow = false,
   });
 
   final double width;
@@ -18,6 +19,7 @@ class CardFlip extends StatefulWidget {
   final Color backColor;
   final int numberCard;
   final bool canFlip;
+  final bool flipNow;
   final Function onTap;
 
   @override
@@ -40,18 +42,21 @@ class _CardFlipState extends State<CardFlip>
     );
 
     _animation = Tween(end: 1.0, begin: 0.0).animate(_animationController)
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        _animationStatus = status;
-        print(status);
-      });
+      ..addListener(
+        () {
+          setState(() {});
+        },
+      )
+      ..addStatusListener(
+        (status) {
+          _animationStatus = status;
+        },
+      );
   }
 
-  Widget frontCard() {
+  Widget backCard() {
     return materialCard(
-      Colors.red,
+      widget.backColor,
       Text(
         widget.numberCard.toString(),
         style: TextStyle(
@@ -62,9 +67,9 @@ class _CardFlipState extends State<CardFlip>
     );
   }
 
-  Widget backCard() {
+  Widget frontCard() {
     return materialCard(
-      Colors.orange,
+      widget.frontColor,
       Icon(
         Icons.ac_unit,
         color: Colors.white,
@@ -99,6 +104,12 @@ class _CardFlipState extends State<CardFlip>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.flipNow) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
+
     return Transform(
       alignment: FractionalOffset.center,
       transform: Matrix4.identity()
@@ -106,13 +117,14 @@ class _CardFlipState extends State<CardFlip>
         ..rotateY(kPi * _animation.value),
       child: GestureDetector(
         onTap: () {
+          widget.onTap();
           if (widget.canFlip && _animationStatus == AnimationStatus.dismissed) {
             _animationController.forward();
           } else {
             _animationController.reverse();
           }
         },
-        child: _animation.value <= 0.5 ? backCard() : frontCard(),
+        child: _animation.value <= 0.5 ? frontCard() : backCard(),
       ),
     );
   }
