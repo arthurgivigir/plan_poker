@@ -18,5 +18,30 @@ const Color kSecondaryColor = Color(0xFFE9575F);
 const Color kSecondaryLightColor = Color(0xFFF1A7A2);
 const Color kSecondaryDarkColor = Color(0xFFDE214C);
 
+const Color kTextColor = Color(0xFF5130A8);
+
 const String kRouteHome = '/';
 const String kRouteRoomScreen = '/room';
+
+final kHintTextStyle = TextStyle(
+  color: Colors.white54,
+  fontFamily: 'OpenSans',
+);
+
+final kLabelStyle = TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'OpenSans',
+);
+
+final kBoxDecorationStyle = BoxDecoration(
+  color: Color(0xFF6CA8F1),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);
