@@ -19,8 +19,11 @@ class CardGridMaker extends StatelessWidget {
       String idStorage = await LocalStorage.instance.getRoomId();
       User userStorage = await LocalStorage.instance.getUser();
 
-      RoomService.instance
-          .updateMyCard(roomId: idStorage, userId: userStorage.id, value: '1');
+      if (userStorage.cardValue != '1') {
+        RoomService.instance.updateMyCard(
+            roomId: idStorage, userId: userStorage.id, value: '1');
+        print('Mudou');
+      }
     } catch (error) {
       Future.error('Ocorreu um erro ao fazer update da carta... $error');
     }
@@ -28,8 +31,6 @@ class CardGridMaker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ObservableBox myValue = new ObservableBox('hello');
-
     return StreamBuilder(
       stream: RoomService.instance.getSnapshot(roomId: roomId),
       builder: (context, snapshot) {
@@ -53,7 +54,7 @@ class CardGridMaker extends StatelessWidget {
 
         print(emptyNow);
         if (emptyNow) {
-          // emptyCard();
+          emptyCard();
         }
 
         for (var userMap in usersMap) {

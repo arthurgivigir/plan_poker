@@ -29,6 +29,7 @@ class Room {
     return {
       'name': name,
       'flipNow': flipNow,
+      'emptyNow': emptyNow,
       'users': FieldValue.arrayUnion(
         convertUserListToJson(),
       )
