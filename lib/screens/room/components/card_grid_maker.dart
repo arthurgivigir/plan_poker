@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:planpoker/commons/constants.dart';
 import 'package:planpoker/interfaces/card_flip.dart';
 import 'package:planpoker/models/user.dart';
+import 'package:planpoker/services/local_storage.dart';
 import 'package:planpoker/services/room_service.dart';
 
 class CardGridMaker extends StatelessWidget {
@@ -13,8 +14,22 @@ class CardGridMaker extends StatelessWidget {
 
   final String roomId;
 
+  void emptyCard() async {
+    try {
+      String idStorage = await LocalStorage.instance.getRoomId();
+      User userStorage = await LocalStorage.instance.getUser();
+
+      RoomService.instance
+          .updateMyCard(roomId: idStorage, userId: userStorage.id, value: '1');
+    } catch (error) {
+      Future.error('Ocorreu um erro ao fazer update da carta... $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // ObservableBox myValue = new ObservableBox('hello');
+
     return StreamBuilder(
       stream: RoomService.instance.getSnapshot(roomId: roomId),
       builder: (context, snapshot) {
@@ -34,6 +49,12 @@ class CardGridMaker extends StatelessWidget {
         var documentData = snapshot.data;
         var usersMap = documentData['users'] as List;
         var flipNow = documentData['flipNow'] as bool;
+        var emptyNow = documentData['emptyNow'] as bool;
+
+        print(emptyNow);
+        if (emptyNow) {
+          // emptyCard();
+        }
 
         for (var userMap in usersMap) {
           var user = User.fromJson(userMap);

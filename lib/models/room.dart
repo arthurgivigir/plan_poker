@@ -6,6 +6,7 @@ class Room {
   String name;
   List<User> users = [];
   bool flipNow = false;
+  bool emptyNow = false;
 
   Room({this.id, this.name});
 
@@ -13,7 +14,8 @@ class Room {
       : id = id ?? '',
         name = snapshot['name'] ?? '',
         users = snapshot['users'] ?? [],
-        flipNow = snapshot['flipNow'] ?? false;
+        flipNow = snapshot['flipNow'] ?? false,
+        emptyNow = snapshot['emptyNow'] ?? false;
 
   List<Map> convertUserListToJson() {
     List<Map> list = [];

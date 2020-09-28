@@ -19,6 +19,7 @@ const Color kSecondaryLightColor = Color(0xFFF1A7A2);
 const Color kSecondaryDarkColor = Color(0xFFDE214C);
 
 const Color kTextColor = Color(0xFF5130A8);
+const Color kDarkButtonColor = Color(0xff527daa);
 
 const String kRouteHome = '/';
 const String kRouteRoomScreen = '/room';

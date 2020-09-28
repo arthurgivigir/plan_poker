@@ -21,6 +21,7 @@ class Body extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('PlanPoker'),
+        backgroundColor: Color(0xff398ae5),
       ),
       body: FutureBuilder(
         future: backProperties(context: context, user: user, roomId: roomId),
@@ -52,7 +53,7 @@ class ScrollView extends StatelessWidget {
     User user = snapshot.item2;
 
     return CustomScrollView(
-      primary: false,
+      primary: true,
       slivers: [
         HeaderMaker(
           size: size,

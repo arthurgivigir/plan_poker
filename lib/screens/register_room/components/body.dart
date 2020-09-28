@@ -34,7 +34,7 @@ class Body extends StatelessWidget {
         var room = Room(name: _roomNameController.text);
         var admin = User(
           name: _adminRoomNameController.text,
-          cardValue: 1,
+          cardValue: '1',
           isAdmin: true,
         );
         room.users.add(admin);
@@ -161,16 +161,14 @@ class Body extends StatelessWidget {
                   height: 20,
                 ),
                 RoundedButton(
-                  size: size,
                   color: kSecondaryLightColor,
                   text: 'Criar Sala',
-                  press: () => alertCreateRoom(),
+                  onPressed: () => alertCreateRoom(),
                 ),
                 RoundedButton(
-                  size: size,
                   color: kSecondaryColor,
                   text: 'Entrar na Sala',
-                  press: () => alertEnterRoom(),
+                  onPressed: () => alertEnterRoom(),
                 ),
               ],
             ),

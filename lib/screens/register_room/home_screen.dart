@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planpoker/commons/constants.dart';
+import 'package:planpoker/commons/utils.dart';
+import 'package:planpoker/interfaces/rounded_button.dart';
 import 'package:planpoker/models/room.dart';
 import 'package:planpoker/models/user.dart';
 import 'package:planpoker/services/room_service.dart';
@@ -15,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _showCreateRoom = true;
 
   final _roomNameController = TextEditingController();
-  final _adminRoomNameController = TextEditingController();
   final _roomIdController = TextEditingController();
   final _userNameController = TextEditingController();
 
@@ -23,8 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       var room = Room(name: _roomNameController.text);
       var admin = User(
-        name: _adminRoomNameController.text,
-        cardValue: 1,
+        name: _userNameController.text,
+        cardValue: '1',
         isAdmin: true,
       );
       room.users.add(admin);
@@ -56,37 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _showCreateRoom = !_showCreateRoom;
         print("showCreateRoom");
       },
-    );
-  }
-
-  Widget _button({
-    String text,
-    Color textColor,
-    Color color,
-    Function onPressed,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 10.0,
-        onPressed: onPressed,
-        padding: EdgeInsets.all(20.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        color: color,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: textColor,
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
     );
   }
 
@@ -206,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 FadeAnimation(
                   1.4,
-                  _button(
+                  RoundedButton(
                     text: 'Criar',
                     textColor: Colors.white70,
                     color: Color(0xff527daa),
@@ -310,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 FadeAnimation(
                   1.8,
-                  _button(
+                  RoundedButton(
                     text: 'Entrar',
                     textColor: Colors.white70,
                     color: Color(0xff527daa),
@@ -336,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
               left: 20,
               right: 20,
             ),
-            child: _button(
+            child: RoundedButton(
               text: 'Entrar em uma Sala',
               textColor: Color(0xff527daa),
               color: Colors.white70,
@@ -359,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
               left: 20,
               right: 20,
             ),
-            child: _button(
+            child: RoundedButton(
               text: 'Criar uma Sala',
               textColor: Color(0xff527daa),
               color: Colors.white70,

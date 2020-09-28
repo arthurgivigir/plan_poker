@@ -3,7 +3,7 @@ import 'package:planpoker/commons/utils.dart';
 class User {
   String id = _getId();
   String name;
-  int cardValue = 1;
+  String cardValue = '1';
   bool isAdmin = false;
 
   User({this.name, this.cardValue, this.isAdmin = false});
@@ -11,8 +11,12 @@ class User {
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'] ?? 0,
         name = json['name'] ?? '',
-        cardValue = json['cardValue'] ?? 1,
+        cardValue = json['cardValue'] ?? '1',
         isAdmin = json['isAdmin'] ?? false;
+
+  // User.fromDynamic(List<dynamic> json) {
+  //   json.
+  // }
 
   toJson() {
     return {

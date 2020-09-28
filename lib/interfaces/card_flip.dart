@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:planpoker/commons/constants.dart';
+import 'package:planpoker/models/user.dart';
+import 'package:planpoker/services/local_storage.dart';
+import 'package:planpoker/services/room_service.dart';
 
 class CardFlip extends StatefulWidget {
   CardFlip({
@@ -17,7 +20,7 @@ class CardFlip extends StatefulWidget {
   final double height;
   final Color frontColor;
   final Color backColor;
-  final int numberCard;
+  final String numberCard;
   final bool canFlip;
   final bool flipNow;
   final Function onTap;

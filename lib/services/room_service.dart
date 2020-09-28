@@ -27,7 +27,7 @@ class RoomService extends BaseService {
   Future<Tuple2<String, User>> enterRoom(
       {String roomId, String userName}) async {
     try {
-      User user = User(name: userName, cardValue: 1);
+      User user = User(name: userName, cardValue: '1');
 
       final result = firestore.document('rooms/$roomId');
       print('Passo 2');
@@ -55,7 +55,7 @@ class RoomService extends BaseService {
     }
   }
 
-  void updateMyCard({String roomId, String userId, int value}) async {
+  void updateMyCard({String roomId, String userId, String value}) async {
     try {
       User user = await LocalStorage.instance.getUser();
 
@@ -85,7 +85,10 @@ class RoomService extends BaseService {
     try {
       final result = firestore.document('rooms/$roomId');
       await result.updateData(
-        {'flipNow': true},
+        {
+          'flipNow': true,
+          'emptyNow': false,
+        },
       );
     } catch (error) {
       Future.error(
@@ -97,7 +100,10 @@ class RoomService extends BaseService {
     try {
       final result = firestore.document('rooms/$roomId');
       await result.updateData(
-        {'flipNow': false},
+        {
+          'flipNow': false,
+          'emptyNow': true,
+        },
       );
     } catch (error) {
       Future.error(
